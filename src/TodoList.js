@@ -84,6 +84,7 @@ const getFilteredTasks = () => {
 };
 
 const [selectedCategory, setSelectedCategory] = useState('personnel');
+const [draggedTask, setDraggedTask] = useState(null);
 
 const getCategoryColor = (category) => {
   const colors = {
@@ -92,6 +93,65 @@ const getCategoryColor = (category) => {
     urgent: '#ffa726'
   };
   return colors[category] || '#667eea';
+};
+
+// Fonctions pour le drag & drop
+const handleDragStart = (e, taskId) => {
+  setDraggedTask(taskId);
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/html', e.target.outerHTML);
+  e.dataTransfer.setDragImage(e.target, 0, 0);
+};
+
+const handleDragOver = (e) => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drag-over');
+};
+
+const handleDragEnter = (e) => {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+};
+
+const handleDragLeave = (e) => {
+  e.currentTarget.classList.remove('drag-over');
+};
+
+const handleDrop = (e, targetTaskId) => {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  
+  if (draggedTask === targetTaskId) {
+    setDraggedTask(null);
+    return;
+  }
+
+  const draggedIndex = tasks.findIndex(task => task.id === draggedTask);
+  const targetIndex = tasks.findIndex(task => task.id === targetTaskId);
+  
+  if (draggedIndex !== -1 && targetIndex !== -1) {
+    const newTasks = [...tasks];
+    const draggedTaskObj = newTasks[draggedIndex];
+    
+    // Supprimer la tâche de sa position actuelle
+    newTasks.splice(draggedIndex, 1);
+    
+    // Insérer la tâche à sa nouvelle position
+    newTasks.splice(targetIndex, 0, draggedTaskObj);
+    
+    setTasks(newTasks);
+  }
+  
+  setDraggedTask(null);
+};
+
+const handleDragEnd = (e) => {
+  setDraggedTask(null);
+  // Nettoyer toutes les classes drag-over
+  document.querySelectorAll('.drag-over').forEach(el => {
+    el.classList.remove('drag-over');
+  });
 };
 
   return (
@@ -154,7 +214,22 @@ const getCategoryColor = (category) => {
 
     <ul className="task-list">
       {getFilteredTasks().map((task, index) => (
-        <li className={`task-item ${task.completed ? 'completed' : ''}`} key={task.id || index}>
+        <li 
+          className={`task-item ${task.completed ? 'completed' : ''} ${draggedTask === task.id ? 'dragging' : ''}`} 
+          key={task.id || index}
+          onDragOver={handleDragOver}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDrop={(e) => handleDrop(e, task.id)}
+          onDragEnd={handleDragEnd}
+        >
+          <div 
+            className="drag-handle"
+            draggable="true"
+            onDragStart={(e) => handleDragStart(e, task.id)}
+          >
+            ⋮⋮
+          </div>
           <input 
             type="checkbox" 
             checked={task.completed || false}
