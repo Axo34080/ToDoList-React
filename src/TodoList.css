@@ -102,7 +102,7 @@ body::after {
 }
 
 .input {
-  flex: 2.5;
+  flex: 3;
   padding: 12px 14px;
   border: none;
   border-radius: 12px;
@@ -121,11 +121,11 @@ body::after {
 }
 
 .category-select {
-  flex: 1;
-  padding: 12px 12px;
+  flex: 0.8;
+  padding: 12px 8px;
   border: none;
   border-radius: 12px;
-  font-size: 13px;
+  font-size: 12px;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -133,6 +133,7 @@ body::after {
   cursor: pointer;
   color: #333;
   font-weight: 500;
+  max-width: 140px;
 }
 
 .category-select:focus {
@@ -145,7 +146,7 @@ body::after {
 .add-button {
   background: linear-gradient(135deg, #ff6b6b, #ee5a52);
   border: none;
-  padding: 12px 16px;
+  padding: 12px 14px;
   border-radius: 12px;
   color: white;
   font-weight: 600;
@@ -153,12 +154,286 @@ body::after {
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
   flex-shrink: 0;
-  font-size: 14px;
+  font-size: 13px;
+  min-width: 80px;
 }
 
 .add-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(238, 90, 82, 0.4);
+}
+
+/* Formulaire d'ajout de catégorie */
+.add-category-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  align-items: center;
+  animation: slideInFromTop 0.3s ease-out;
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.category-name-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  min-width: 0;
+}
+
+.category-name-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-emoji-select {
+  flex: 0 0 50px;
+  padding: 6px 4px;
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  /* Garder l'apparence native pour voir l'emoji */
+  appearance: auto;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+  font-variant-emoji: emoji;
+  line-height: 1;
+}
+
+.category-emoji-select:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-emoji-select option {
+  font-size: 18px;
+  padding: 6px;
+  background: white;
+  color: #333;
+  text-align: center;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+}
+
+.confirm-category-button,
+.cancel-category-button {
+  flex: 0 0 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirm-category-button {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.confirm-category-button:hover {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  transform: translateY(-1px);
+}
+
+.cancel-category-button {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.cancel-category-button:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: translateY(-1px);
+}
+
+/* Modal de confirmation de suppression */
+.delete-confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-confirmation-content {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.delete-confirmation-content h3 {
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 20px;
+}
+
+.delete-confirmation-content p {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 16px;
+}
+
+.delete-confirmation-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.confirm-delete-button {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-delete-button:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: translateY(-1px);
+}
+
+.cancel-delete-button {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-delete-button:hover {
+  background: linear-gradient(135deg, #7f8c8d, #6c7b7d);
+  transform: translateY(-1px);
+}
+
+/* Gestion des catégories */
+.category-management {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  animation: slideInFromTop 0.3s ease-out;
+}
+
+.category-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.category-management h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+}
+
+.close-management-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-management-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.category-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.delete-category-button {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  border: none;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-category-button:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: scale(1.1);
 }
 
 /* Container des filtres */
@@ -385,5 +660,76 @@ body::after {
   background: linear-gradient(135deg, #4ecdc4, #44a08d);
   border-color: transparent;
   box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+}
+
+/* Styles responsive pour le formulaire d'ajout de catégorie */
+@media (max-width: 768px) {
+  .add-category-form {
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+  }
+  
+  .category-name-input,
+  .category-emoji-select {
+    flex: none;
+    width: 100%;
+  }
+  
+  .category-emoji-select {
+    width: 80px;
+    align-self: center;
+    font-size: 22px;
+  }
+  
+  .confirm-category-button,
+  .cancel-category-button {
+    flex: none;
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .add-category-form {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-category-form {
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .category-name-input {
+    font-size: 16px; /* Évite le zoom sur iOS */
+  }
+  
+  .category-emoji-select {
+    font-size: 22px;
+    width: 80px;
+    height: 40px;
+  }
+}
+
+/* Message informatif quand il n'y a pas de catégories personnalisées */
+.no-custom-categories {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.no-custom-categories p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.no-custom-categories p:first-child {
+  font-weight: 500;
+  color: white;
 }
 
