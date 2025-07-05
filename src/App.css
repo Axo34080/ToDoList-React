@@ -1,7 +1,15 @@
-.App {
-  text-align: center;
-  padding: 2rem;
+body {
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
-  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  max-width: 500px;
+  margin: 50px auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
