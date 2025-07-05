@@ -41,9 +41,11 @@ const toggleComplete = (taskId) => {
 
 const addTask = () => {
   const newTaskObj = {
-    id: Date.now(), // ou uuid
+    id: Date.now(),
     text: newTask.trim(),
     completed: false,
+    category: selectedCategory,
+    color: getCategoryColor(selectedCategory),
     createdAt: new Date().toISOString()
   };
   setTasks([...tasks, newTaskObj]);
@@ -58,15 +60,38 @@ const saveToLocalStorage = (tasks) => {
 };
 
 const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
+const [categoryFilter, setCategoryFilter] = useState('all');
+
 const getFilteredTasks = () => {
+  let filtered = tasks;
+  
+  // Filtre par statut (comme actuellement)
   switch (filter) {
     case 'active':
-      return tasks.filter(task => !task.completed);
+      filtered = filtered.filter(task => !task.completed);
+      break;
     case 'completed':
-      return tasks.filter(task => task.completed);
-    default:
-      return tasks;
+      filtered = filtered.filter(task => task.completed);
+      break;
   }
+  
+  // Filtre par catégorie
+  if (categoryFilter !== 'all') {
+    filtered = filtered.filter(task => task.category === categoryFilter);
+  }
+  
+  return filtered;
+};
+
+const [selectedCategory, setSelectedCategory] = useState('personnel');
+
+const getCategoryColor = (category) => {
+  const colors = {
+    personnel: '#ff6b6b',
+    travail: '#4ecdc4', 
+    urgent: '#ffa726'
+  };
+  return colors[category] || '#667eea';
 };
 
   return (
@@ -81,29 +106,51 @@ const getFilteredTasks = () => {
         value={newTask}
         onChange={handleChange}
       />
+      <select 
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+        className="category-select"
+      >
+        <option value="personnel">👤 Personnel</option>
+        <option value="travail">💼 Travail</option>
+        <option value="urgent">⚡ Urgent</option>
+      </select>
       <button className="add-button" type="submit">Ajouter</button>
     </form>
 
-    <div className="filter-buttons">
-  <button 
-    className={filter === 'all' ? 'active' : ''}
-    onClick={() => setFilter('all')}
-  >
-    Toutes
-  </button>
-  <button 
-    className={filter === 'active' ? 'active' : ''}
-    onClick={() => setFilter('active')}
-  >
-    Actives
-  </button>
-  <button 
-    className={filter === 'completed' ? 'active' : ''}
-    onClick={() => setFilter('completed')}
-  >
-    Terminées
-  </button>
-</div>
+    <div className="filters-container">
+      <div className="status-filter-buttons">
+        <button 
+          className={filter === 'all' ? 'active' : ''}
+          onClick={() => setFilter('all')}
+        >
+          Toutes
+        </button>
+        <button 
+          className={filter === 'active' ? 'active' : ''}
+          onClick={() => setFilter('active')}
+        >
+          Actives
+        </button>
+        <button 
+          className={filter === 'completed' ? 'active' : ''}
+          onClick={() => setFilter('completed')}
+        >
+          Terminées
+        </button>
+      </div>
+      
+      <select 
+        value={categoryFilter}
+        onChange={(e) => setCategoryFilter(e.target.value)}
+        className="category-filter-select"
+      >
+        <option value="all">🏠 Toutes catégories</option>
+        <option value="personnel">👤 Personnel</option>
+        <option value="travail">💼 Travail</option>
+        <option value="urgent">⚡ Urgent</option>
+      </select>
+    </div>
 
     <ul className="task-list">
       {getFilteredTasks().map((task, index) => (
@@ -117,6 +164,17 @@ const getFilteredTasks = () => {
           <span className={`task-text ${task.completed ? 'completed' : ''}`}>
             {task.text || task}
           </span>
+          {task.category && (
+            <span 
+              className="task-category"
+              style={{ backgroundColor: task.color || getCategoryColor(task.category) }}
+            >
+              {task.category === 'personnel' && '👤'}
+              {task.category === 'travail' && '💼'}
+              {task.category === 'urgent' && '⚡'}
+              {task.category}
+            </span>
+          )}
           <button className="delete-button" onClick={() => handleDelete(index)}>✖</button>
         </li>
       ))}
