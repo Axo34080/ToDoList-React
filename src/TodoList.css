@@ -733,3 +733,172 @@ body::after {
   color: white;
 }
 
+/* RESPONSIVE DESIGN - Media Queries */
+
+/* Tablettes et petits écrans */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  .app {
+    padding: 1.5rem;
+    margin: 15px auto;
+  }
+  
+  .app h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Formulaire d'ajout responsive */
+  .form {
+    flex-direction: column;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .input,
+  .category-select,
+  .add-button {
+    flex: none;
+    width: 100%;
+    max-width: none;
+  }
+  
+  .category-select {
+    font-size: 14px;
+    padding: 12px;
+  }
+  
+  /* Filtres responsive */
+  .filters-container {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+  
+  .status-filter-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .category-filter-select {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  /* Gestion des catégories responsive */
+  .category-list {
+    justify-content: center;
+  }
+  
+  .category-item {
+    font-size: 13px;
+  }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
+  .app {
+    padding: 1rem;
+    margin: 10px auto;
+  }
+  
+  .app h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Formulaire d'ajout très compact */
+  .form {
+    gap: 8px;
+  }
+  
+  .input,
+  .category-select,
+  .add-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  /* Boutons de filtres plus compacts */
+  .status-filter-buttons button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .category-filter-select {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  
+  /* Formulaire d'ajout de catégorie responsive */
+  .add-category-form {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .category-name-input {
+    order: 1;
+    flex: 1 1 100%;
+    margin-bottom: 6px;
+  }
+  
+  .category-emoji-select {
+    order: 2;
+    flex: 0 0 60px;
+  }
+  
+  .confirm-category-button,
+  .cancel-category-button {
+    order: 3;
+    flex: 1;
+  }
+  
+  /* Tâches plus compactes */
+  .task-item {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .task-category {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+  
+  .delete-button {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+  
+  /* Modal responsive */
+  .delete-confirmation-content {
+    padding: 16px;
+    width: 95%;
+  }
+  
+  .delete-confirmation-content h3 {
+    font-size: 18px;
+  }
+  
+  .delete-confirmation-content p {
+    font-size: 14px;
+  }
+  
+  .delete-confirmation-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .confirm-delete-button,
+  .cancel-delete-button {
+    padding: 12px 20px;
+  }
+}
+
